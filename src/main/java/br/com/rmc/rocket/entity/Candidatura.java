@@ -25,4 +25,8 @@ public class Candidatura {
     @JoinColumn(name = "usuario_id", nullable = false)
     @ManyToOne
     private Usuario usuario;
+
+    @JoinColumn(name = "status_id", nullable = false)
+    @ManyToOne
+    private Status status;
 }
