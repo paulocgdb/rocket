@@ -48,4 +48,7 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario")
     private List<Documento> documentoList;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Candidatura> candidaturaList;
 }
