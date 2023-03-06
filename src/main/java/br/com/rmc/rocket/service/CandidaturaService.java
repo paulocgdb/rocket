@@ -1,11 +1,13 @@
 package br.com.rmc.rocket.service;
 
 import br.com.rmc.rocket.dto.CandidaturaDTO;
+import br.com.rmc.rocket.dto.UsuarioDTO;
 import br.com.rmc.rocket.entity.Candidatura;
 import br.com.rmc.rocket.entity.Status;
 import br.com.rmc.rocket.entity.Usuario;
 import br.com.rmc.rocket.repository.CandidaturaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -40,8 +42,9 @@ public class CandidaturaService {
         return CandidaturaDTO.builder().id(candidatura.getId()).build();
     }
 
-    public Candidatura salvar(CandidaturaDTO candidaturaDTO, List<MultipartFile> documentos) {
-        Usuario usuarioSalvo = usuarioService.salvar(candidaturaDTO.getUsuario());
+    @Transactional
+    public Candidatura salvar(UsuarioDTO usuarioDTO, List<MultipartFile> documentos) {
+        Usuario usuarioSalvo = usuarioService.salvar(usuarioDTO);
 
         documentoService.salvarDocumentos(documentos, usuarioSalvo);
 

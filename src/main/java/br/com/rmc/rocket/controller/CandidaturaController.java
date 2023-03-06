@@ -1,9 +1,11 @@
 package br.com.rmc.rocket.controller;
 
 import br.com.rmc.rocket.dto.CandidaturaDTO;
+import br.com.rmc.rocket.dto.UsuarioDTO;
 import br.com.rmc.rocket.entity.Candidatura;
 import br.com.rmc.rocket.service.CandidaturaService;
 import br.com.rmc.rocket.service.UsuarioService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,15 +26,15 @@ public class CandidaturaController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Candidatura> salvarCandidatura(@RequestParam("candidatura") CandidaturaDTO candidaturaDTO,
+    @PostMapping(value = "/cadastrar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Candidatura> salvarCandidatura(@RequestPart("usuario") UsuarioDTO usuarioDTO,
                                                          @RequestPart("documentos") List<MultipartFile> documentos
     ) {
-        if (usuarioService.ehUsuarioJaCadastrado(candidaturaDTO.getUsuario().getEmail())) {
+        if (usuarioService.ehUsuarioJaCadastrado(usuarioDTO.getEmail())) {
             throw new RuntimeException("Usuário já existente! Acesse a área restrita.");
         }
 
-        Candidatura candidaturaSalva = candidaturaService.salvar(candidaturaDTO, documentos);
+        Candidatura candidaturaSalva = candidaturaService.salvar(usuarioDTO, documentos);
 
         return ResponseEntity.ok(candidaturaSalva);
     }

@@ -37,7 +37,7 @@ public class DocumentoService {
         Documento documento = new Documento();
         documento.setUsuario(usuario);
         documento.setConteudo(arquivo.getBytes());
-        documento.setNome(arquivo.getName());
+        documento.setNome(arquivo.getOriginalFilename());
         documento.setDataCriacao(LocalDateTime.now());
 
         return documento;

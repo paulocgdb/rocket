@@ -27,7 +27,6 @@ public class Documento implements Serializable {
     private LocalDateTime dataCriacao;
 
     @Column(name = "conteudo", nullable = false)
-    @Lob
     private byte[] conteudo;
 
     @ManyToOne

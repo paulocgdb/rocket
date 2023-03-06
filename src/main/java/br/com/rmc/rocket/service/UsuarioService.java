@@ -15,7 +15,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PerfilService perfilService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, CidadeService cidadeService, PerfilService perfilService) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PerfilService perfilService) {
         this.usuarioRepository = usuarioRepository;
         this.perfilService = perfilService;
     }
@@ -36,8 +36,11 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario salvar(Usuario usuario) {
-        if (usuario.getEmail().contains("@rocket.com")) {
+    public Usuario salvar(UsuarioDTO usuarioDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        Usuario usuario = modelMapper.map(usuarioDTO, Usuario.class);
+
+        if (usuarioDTO.getEmail().contains("@rocket.com")) {
             usuario.setPerfil(perfilService.buscarPerfilPorId(1L).get());
         } else {
             usuario.setPerfil(perfilService.buscarPerfilPorId(2L).get());
