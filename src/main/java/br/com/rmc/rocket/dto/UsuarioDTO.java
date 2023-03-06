@@ -3,14 +3,12 @@ package br.com.rmc.rocket.dto;
 import br.com.rmc.rocket.entity.Cidade;
 import br.com.rmc.rocket.entity.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

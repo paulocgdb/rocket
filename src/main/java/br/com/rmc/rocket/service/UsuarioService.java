@@ -51,4 +51,8 @@ public class UsuarioService {
         return usuario;
     }
 
+    public Usuario buscarPorEmailESenha(String email, String senha) {
+        return usuarioRepository.findUsuarioByEmailEqualsAndSenhaEquals(email, senha);
+    }
+
 }
