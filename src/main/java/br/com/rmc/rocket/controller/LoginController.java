@@ -15,7 +15,7 @@ public class LoginController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/{idUsuario}")
+    @GetMapping
     public ResponseEntity<Boolean> realizarLogin(@RequestParam("email") String email,
                                                  @RequestParam("senha") String senha
     ) {

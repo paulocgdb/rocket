@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/candidaturas")
@@ -49,7 +50,7 @@ public class CandidaturaController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/em-analise")
     public ResponseEntity<List<CandidaturaDTO>> buscarTodasEmAnalise() {
         List<CandidaturaDTO> candidaturaDTOList = candidaturaService.buscarTodasEmAnalise();
         if (!candidaturaDTOList.isEmpty()) {
@@ -67,5 +68,12 @@ public class CandidaturaController {
     @GetMapping("/reprovar/{id}")
     public ResponseEntity<Boolean> reprovarCandidatura(@PathVariable("id") Long id) {
         return ResponseEntity.ok(candidaturaService.reprovar(id));
+    }
+
+    @GetMapping(value = "/buscar/{id}")
+    public ResponseEntity<Candidatura> buscarCandidatura(@PathVariable("id") Long id) {
+        Optional<Candidatura> candidatura = candidaturaService.buscarPorId(id);
+
+        return candidatura.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

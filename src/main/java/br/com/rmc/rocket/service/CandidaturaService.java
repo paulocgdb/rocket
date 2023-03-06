@@ -39,7 +39,12 @@ public class CandidaturaService {
     }
 
     private CandidaturaDTO converterParaDTO(Candidatura candidatura) {
-        return CandidaturaDTO.builder().id(candidatura.getId()).build();
+        return CandidaturaDTO
+                .builder()
+                .id(candidatura.getId())
+                .dataCriacao(candidatura.getDataCriacao())
+                .status(candidatura.getStatus())
+                .build();
     }
 
     @Transactional
@@ -90,5 +95,10 @@ public class CandidaturaService {
         }
 
         throw new RuntimeException("Não foi possível reprovar a candidatura!");
+    }
+
+
+    public Optional<Candidatura> buscarPorId(Long id) {
+        return candidaturaRepository.findById(id);
     }
 }

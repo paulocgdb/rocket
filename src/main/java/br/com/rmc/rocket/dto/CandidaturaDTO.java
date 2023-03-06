@@ -2,6 +2,7 @@ package br.com.rmc.rocket.dto;
 
 import br.com.rmc.rocket.entity.Cidade;
 import br.com.rmc.rocket.entity.Documento;
+import br.com.rmc.rocket.entity.Status;
 import br.com.rmc.rocket.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,8 @@ public class CandidaturaDTO {
     private Usuario usuario;
 
     private Cidade cidade;
+
+    private Status status;
 
     private List<Documento> documentoList;
 }
