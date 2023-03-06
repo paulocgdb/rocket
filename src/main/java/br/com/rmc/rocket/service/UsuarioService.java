@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -33,6 +35,20 @@ public class UsuarioService {
 
     public boolean ehUsuarioJaCadastrado(String email) {
         return usuarioRepository.findUsuarioByEmail(email) != null;
+    }
+
+    public boolean ehMenorDeIdade(UsuarioDTO usuarioDTO) {
+        LocalDateTime dataNascimento = usuarioDTO.getDataNascimento();
+        LocalDateTime dataAtual = LocalDateTime.now();
+        int idade = dataAtual.getYear() - dataNascimento.getYear();
+
+        if (dataAtual.getMonthValue() < dataNascimento.getMonthValue()
+                || (dataAtual.getMonthValue() == dataNascimento.getMonthValue()
+                && dataAtual.getDayOfMonth() < dataNascimento.getDayOfMonth())) {
+            idade--;
+        }
+
+        return idade < 18;
     }
 
     @Transactional
