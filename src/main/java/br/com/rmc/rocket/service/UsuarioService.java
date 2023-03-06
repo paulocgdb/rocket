@@ -3,39 +3,49 @@ package br.com.rmc.rocket.service;
 import br.com.rmc.rocket.dto.UsuarioDTO;
 import br.com.rmc.rocket.entity.Usuario;
 import br.com.rmc.rocket.repository.UsuarioRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PerfilService perfilService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, CidadeService cidadeService, PerfilService perfilService) {
         this.usuarioRepository = usuarioRepository;
+        this.perfilService = perfilService;
     }
 
-    public List<UsuarioDTO> buscarTodos() {
-        List<Usuario> usuarioList = usuarioRepository.findAll();
-
-        return usuarioList.stream().map(this::converterParaDTO).collect(Collectors.toList());
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findAll();
     }
 
-    private UsuarioDTO converterParaDTO(Usuario usuario) {
-        return UsuarioDTO.builder()
-                .id(usuario.getId())
-                .nome(usuario.getNome())
-                .build();
+    public UsuarioDTO buscarPorEmail(String email) {
+        ModelMapper modelMapper = new ModelMapper();
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email);
+
+        return modelMapper.map(usuario, UsuarioDTO.class);
     }
 
-    private Usuario converterParaEntidade(UsuarioDTO usuarioDTO) {
-        return Usuario.builder()
-                .id(usuarioDTO.getId())
-                .nome(usuarioDTO.getNome())
-                .build();
+    public boolean ehUsuarioJaCadastrado(String email) {
+        return usuarioRepository.findUsuarioByEmail(email) != null;
     }
 
+    @Transactional
+    public Usuario salvar(Usuario usuario) {
+        if (usuario.getEmail().contains("@rocket.com")) {
+            usuario.setPerfil(perfilService.buscarPerfilPorId(1L).get());
+        } else {
+            usuario.setPerfil(perfilService.buscarPerfilPorId(2L).get());
+        }
+
+        usuarioRepository.save(usuario);
+
+        return usuario;
+    }
 
 }

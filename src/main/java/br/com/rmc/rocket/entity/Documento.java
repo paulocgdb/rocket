@@ -33,8 +33,4 @@ public class Documento implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
-
-    @ManyToOne
-    @JoinColumn(name = "tipo_documento_id", nullable = false)
-    private TipoDocumento tipoDocumento;
 }

@@ -1,3 +1,4 @@
 INSERT INTO status (id, nome)
-VALUES (1, 'DEFERIDA'),
-       (2, 'INDEFERIDA');
+VALUES (1, 'EM ANALISE'),
+       (2, 'INDEFERIDA'),
+       (3, 'DEFERIDA');

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,7 +18,16 @@ public class UsuarioDTO {
 
     private String nome;
 
-    private String cidade;
+    private CidadeDTO cidade;
+    private PerfilDTO perfil;
+
+    private String email;
+
+    private String senha;
+    private String cpf;
+    private String nomeMae;
+
+    private LocalDateTime dataNascimento;
 
     private Long quantidadeCandidaturas;
 
